@@ -65,14 +65,24 @@ app.post("/", (req, res) => {  //response to POST request to HOME route
   item.save();
   res.redirect("/");
 
-  if (req.body.list === "Work") {
-    workItems.push(item);
-    res.redirect("/work");
-  } else {
-    items.push(item);
-    res.redirect("/");
-  }
+  // if (req.body.list === "Work") {
+  //   workItems.push(item);
+  //   res.redirect("/work");
+  // } else {
+  //   items.push(item);
+  //   res.redirect("/");
+  // }
 });
+
+app.post("/delete", (req,res) => {
+  const id = req.body.checkbox;
+  Item.findByIdAndDelete(id, (err) => {
+    if(!err){
+      console.log("Successfully deleted");
+    }
+  })
+  res.redirect("/");
+})
 
 app.get("/work", (req, res) => {
   res.render("List", {
